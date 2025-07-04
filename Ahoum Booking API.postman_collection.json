@@ -1,0 +1,148 @@
+{
+  "info": {
+    "_postman_id": "1d296282-46bb-48c9-a775-085bdd982a04",
+    "name": "Ahoum Booking API",
+    "description": "This collection includes endpoints for:\n\n- Auth (register/login)\n    \n- Viewing events\n    \n- Booking sessions\n    \n- Viewing user's bookings",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40802196"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "/auth/register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New User\",\n  \"email\": \"newuser@ahoum.com\",\n  \"password\": \"newpass123\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5000/auth/register",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "5000",
+              "path": ["auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/auth/login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newuser@ahoum.com\",\n  \"password\": \"newpass123\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5000/auth/login",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "5000",
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "### **POST /auth/register :**\n\nRegister a new user. Returns a success message or error if email exists.\n\n### POST /auth/login :\n\nLogin with credentials. Returns a JWT access token."
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "/bookings/",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1MTY2NjM5MiwianRpIjoiYWJhZmNlMWItNzdiNC00MzQ3LTk2NjEtMTAzYzEwNGE1NjQ2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImZlNjc1OTA0LWU3Y2UtNGUyOC05NTZjLWVlZmNjOTg4NDUxOCIsIm5iZiI6MTc1MTY2NjM5MiwiY3NyZiI6IjRkOTQ1MmI0LTkzNmMtNGQ5My1hNzA5LWRiOThiYmNlZTVlNiIsImV4cCI6MTc1MTcwOTU5Mn0.5AvkdT86gOP5vXZujrLPEqQHhHu4x6mdknyGGyGKQhI",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_id\": \"0710a8a4-7822-4716-b42f-ad3ea0b3acab\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5000/auth/register",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "5000",
+              "path": ["auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/bookings/mine",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1MTY2NjM5MiwianRpIjoiYWJhZmNlMWItNzdiNC00MzQ3LTk2NjEtMTAzYzEwNGE1NjQ2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImZlNjc1OTA0LWU3Y2UtNGUyOC05NTZjLWVlZmNjOTg4NDUxOCIsIm5iZiI6MTc1MTY2NjM5MiwiY3NyZiI6IjRkOTQ1MmI0LTkzNmMtNGQ5My1hNzA5LWRiOThiYmNlZTVlNiIsImV4cCI6MTc1MTcwOTU5Mn0.5AvkdT86gOP5vXZujrLPEqQHhHu4x6mdknyGGyGKQhI",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:5000/bookings/mine",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "5000",
+              "path": ["bookings", "mine"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "## **POST /bookings/ :**\n\nBooks the selected event for the logged-in user.  \nTriggers a CRM notification.\n\n### **GET /bookings/mine :**\n\nReturns the user's past and upcoming bookings."
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "/events/",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5000/events/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "5000",
+              "path": ["events", ""]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "### **GET /events/ :**\n\nPublic route. Lists all upcoming events/sessions with facilitator info."
+    }
+  ]
+}

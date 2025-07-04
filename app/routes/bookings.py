@@ -13,7 +13,10 @@ bookings_bp = Blueprint("bookings", __name__)
 def book_event():
     user_id = get_jwt_identity()
     data = request.get_json() or {}
+    print("📩 Raw JSON received:", data)
+
     event_id = data.get("event_id")
+    print("🔎 Extracted event_id:", event_id)
 
     if not event_id:
         return jsonify({"msg": "event_id is required"}), 400

@@ -33,6 +33,12 @@ This is a RESTful Flask API for booking sessions & retreats, with:
 
 ---
 
+## 🗃️ Database Schema
+
+![Ahoum ER Diagram](schema/ahoum-schema.png)
+
+---
+
 ## ⚙️ Local Setup
 
 ### 1. Clone the Repository
@@ -75,6 +81,11 @@ Visit: [http://localhost:5000](http://localhost:5000)
 ---
 
 ## 📘 API Documentation
+
+> You can also import the full request flow via:  
+> 🧾 `Ahoum API.postman_collection.json`
+
+---
 
 ### 🔐 Authentication
 
@@ -121,13 +132,14 @@ No auth required.
 
 #### POST `/bookings/`
 
-Headers:
+**Headers**:
 
 ```
 Authorization: Bearer <access_token>
+Content-Type: application/json
 ```
 
-Body:
+**Body**:
 
 ```json
 {
@@ -137,7 +149,7 @@ Body:
 
 #### GET `/bookings/mine`
 
-Headers:
+**Headers**:
 
 ```
 Authorization: Bearer <access_token>
@@ -185,7 +197,9 @@ https://your-service-name.onrender.com
 
 ## 📦 Postman Collection
 
-Not required but recommended. You can import this sequence:
+You can import the included `Ahoum API.postman_collection.json` to test all routes.
+
+Suggested order:
 
 1. `POST /auth/register`
 2. `POST /auth/login`
@@ -196,10 +210,68 @@ Not required but recommended. You can import this sequence:
 
 ---
 
+---
+
+## 💳 Payment Integration Roadmap (Razorpay)
+
+To enable paid bookings for events and sessions, the following steps can be implemented:
+
+1. **Create Razorpay Account**
+
+   - Sign up at [https://razorpay.com](https://razorpay.com) and generate API keys.
+
+2. **Add PaymentIntent Model**
+
+   - Create a `payments` table to log attempts:
+     ```python
+     class Payment(db.Model):
+         id = db.Column(db.String, primary_key=True)
+         user_id = db.Column(db.ForeignKey('user.id'), nullable=False)
+         event_id = db.Column(db.ForeignKey('event.id'), nullable=False)
+         amount = db.Column(db.Integer, nullable=False)
+         status = db.Column(db.String, default="created")
+         created_at = db.Column(db.DateTime, default=datetime.utcnow)
+     ```
+
+3. **Create Checkout Endpoint**
+
+   - Add `/payments/create` endpoint:
+     - Accept `event_id`
+     - Use Razorpay Python SDK to create payment order
+     - Return `order_id`, `amount`, and Razorpay key to frontend
+
+4. **Frontend Integration (Optional)**
+
+   - Use Razorpay Checkout UI or embed payment widget in frontend
+   - Pass order details and handle success callback
+
+5. **Verify Payment**
+
+   - After payment, call Razorpay to verify signature and update DB
+   - Change booking status to "confirmed"
+
+6. **Update Booking Flow**
+
+   - Make sure booking is confirmed **only** if payment is successful
+
+7. **Admin Dashboard (Optional)**
+   - View paid/unpaid users, revenue, event-specific payment stats
+
+---
+
+> 🛠️ Libraries: [`razorpay`](https://pypi.org/project/razorpay/)
+
+Install:
+
+```bash
+pip install razorpay
+
+---
+
 ## 💡 Bonus Ideas
 
 - 🔐 Add email verification
-- 💰 Integrate Stripe for paid sessions
+- 💰 Integrate Razorpay for paid sessions
 - 📊 Add facilitator dashboards
 - 🔄 Add retry logic for failed CRM notifications
 
@@ -207,6 +279,7 @@ Not required but recommended. You can import this sequence:
 
 ## 👨‍💻 Developed by
 
-**Shashi Preetham**  
-Backend Developer Internship Assignment – Ahoum  
-[LinkedIn](linkedin.com/in/shashi-preetham-cholluri-17760825a)
+**Shashi Preetham**
+Backend Developer Internship Assignment – Ahoum
+[LinkedIn](https://linkedin.com/in/shashi-preetham-cholluri-17760825a)
+```
