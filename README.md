@@ -257,14 +257,13 @@ To enable paid bookings for events and sessions, the following steps can be impl
 7. **Admin Dashboard (Optional)**
    - View paid/unpaid users, revenue, event-specific payment stats
 
----
-
 > 🛠️ Libraries: [`razorpay`](https://pypi.org/project/razorpay/)
 
 Install:
 
 ```bash
 pip install razorpay
+```
 
 ---
 
@@ -282,4 +281,3 @@ pip install razorpay
 **Shashi Preetham**
 Backend Developer Internship Assignment – Ahoum
 [LinkedIn](https://linkedin.com/in/shashi-preetham-cholluri-17760825a)
-```
