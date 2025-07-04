@@ -16,7 +16,8 @@ def get_all_events():
                 "id": event.id,
                 "title": event.title,
                 "description": event.description,
-                "date": event.date.isoformat(),
+                "start_time": event.start_time.isoformat(),
+                "end_time": event.end_time.isoformat(),
                 "facilitator": {
                     "id": facilitator.id,
                     "name": facilitator.name,

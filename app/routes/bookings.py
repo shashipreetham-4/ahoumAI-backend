@@ -44,7 +44,8 @@ def get_my_bookings():
             {
                 "booking_id": b.id,
                 "event_title": event.title,
-                "date": event.date.isoformat(),
+                "start_time": event.start_time.isoformat(),
+                "end_time": event.end_time.isoformat(),
             }
         )
 
